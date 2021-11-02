@@ -26,7 +26,7 @@ public class CharacterScript:Unit
     // Update is called once per frame
     void Update()
     {
-        print("Hello");
+      //  print("Hello");
         switch (my_state)
         {
 
@@ -133,7 +133,7 @@ public class CharacterScript:Unit
 
     public override void takeDamage(int how_much_damage)
     {
-        throw new NotImplementedException();
+        print("Ouch");
     }
 
     public override void repair(int v)

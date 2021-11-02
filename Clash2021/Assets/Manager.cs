@@ -7,7 +7,7 @@ public class Manager : MonoBehaviour
 
     public GameObject character_prefab_template;
     public GameObject townhall_template;
-
+    public GameObject Cannon_Temp;
 
     List<CharacterScript> allUnits;
     List<Building> allBuildings;
@@ -81,6 +81,19 @@ public class Manager : MonoBehaviour
             }
         }
         
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            GameObject new_CannonGO = Instantiate(Cannon_Temp,
+                new Vector3(Random.Range(-60f, 60f), 0, Random.Range(-60f, 60f)), Quaternion.identity);
+            Building new_CannonScript = new_CannonGO.GetComponent<CannonScript>();
+
+            if(new_CannonScript)
+            {
+                new_CannonScript.ImtheMan(this);
+                allBuildings.Add(new_CannonScript);
+            }
+
+        }
         if(Input.GetKeyDown(KeyCode.X))
         {
           
@@ -108,6 +121,22 @@ public class Manager : MonoBehaviour
         }
 
         return   nearest;
+    }
+
+    internal CharacterScript whats_my_Unit(Building building)
+    {
+        float distance = 100000f;
+        CharacterScript nearest = null;
+        foreach (CharacterScript next_characterScript in allUnits)
+        {
+            if (Vector3.Distance(building.transform.position, next_characterScript.transform.position) < distance)
+            {
+                distance = Vector3.Distance(building.transform.position, next_characterScript.transform.position);
+                nearest = next_characterScript;
+            }
+        }
+
+        return nearest;
     }
 
     public void AOE_Attack(Vector3 position, float radius, int damage, bool attackBuilding)
