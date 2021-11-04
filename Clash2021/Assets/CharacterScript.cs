@@ -5,15 +5,15 @@ using UnityEngine;
 
 public class CharacterScript:Unit
 {
-    enum Character_states { Idle, Move_to_Target, Attack, Death}
+    internal enum Character_states { Idle, Move_to_Target, Attack, Death}
 
-    Character_states my_state = Character_states.Idle;
+    internal Character_states my_state = Character_states.Idle;
     Renderer myRenderer;
     
 
 
     Vector3 velocity;
-    private float character_speed = 3f;
+    internal float character_speed = 3f;
 
 
     // Start is called before the first frame update

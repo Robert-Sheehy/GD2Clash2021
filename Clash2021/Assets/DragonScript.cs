@@ -3,16 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DragonScript : CharacterScript 
+public class DragonScript : CharacterScript
 {
-    enum Character_states { Idle, Move_to_Target, Attack, Death }
-    int DPS = 20;
-    float attack_time_interval = 0.5f;
-    float attack_timer;
-    Character_states my_state = Character_states.Idle;
 
-    private int MHP = 1000, CHP = 1000, _level = 0;
-    Building current_target;
+
+
+
 
     Vector3 velocity;
     private float character_speed = 1.5f;
@@ -21,6 +17,7 @@ public class DragonScript : CharacterScript
     // Start is called before the first frame update
     void Start()
     {
+        attack_time_interval = 5;
         transform.position = new Vector3(27, 10, -10);
     }
 
@@ -86,19 +83,6 @@ public class DragonScript : CharacterScript
             }
         }
 
-
-
-
-
-
-
-
-
-        if (Input.GetKey(KeyCode.DownArrow)) velocity = Vector3.back;
-        if (Input.GetKey(KeyCode.LeftArrow)) velocity = Vector3.left;
-        if (Input.GetKey(KeyCode.RightArrow)) velocity = Vector3.right;
-        if (Input.GetKey(KeyCode.UpArrow)) velocity = Vector3.forward;
-
     }
 
     public void assign_target(Building current_target)
@@ -112,7 +96,7 @@ public class DragonScript : CharacterScript
         }
     }
 
-    private bool within_range(Building current_target)
+    private bool within_range(Unit current_target)
     {
         return (Vector3.Distance(transform.position, current_target.transform.position) < current_target.Melee_distance + 20.0f);
     }
