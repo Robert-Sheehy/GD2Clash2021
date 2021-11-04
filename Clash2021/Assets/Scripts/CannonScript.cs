@@ -18,7 +18,7 @@ public class CannonScript :Building, IHealth
     // Start is called before the first frame update
     void Start()
     {
-
+        Melee_distance = 3.5f;
     }
 
     // Update is called once per frame
@@ -44,17 +44,21 @@ public class CannonScript :Building, IHealth
 
                 if (attack_timer <= 0f)
                 {
-                    GameObject new_CannonBall = Instantiate(CannonBall,
-                        transform.position, Quaternion.identity);
-
-                    current_target.takeDamage((int)((float)DPS * attack_time_interval));
-                    attack_timer = attack_time_interval;
-
                   if(within_attack_range(current_target))
                     {
                         Vector3 from_me_to_Character = current_target.transform.position - transform.position;
                         Vector3 direction = from_me_to_Character.normalized;
                         transform.forward = direction;
+
+                        GameObject new_CannonBall = Instantiate(CannonBall,
+                       transform.position + new Vector3(2,1.5f), Quaternion.identity);
+                        projectile_script NewCannonballScript = new_CannonBall.GetComponent<projectile_script>();
+                        NewCannonballScript.setup_projectile(this, current_target, 0, 50);
+
+
+                        current_target.takeDamage((int)((float)DPS * attack_time_interval));
+                        attack_timer = attack_time_interval;
+
                     }
                 }
 
@@ -94,8 +98,13 @@ public class CannonScript :Building, IHealth
         throw new System.NotImplementedException();
     }
 
-    public void takeDamage(int v)
+    public override void takeDamage(int how_much_damage)
     {
-        throw new System.NotImplementedException();
+        CHP -= how_much_damage;
+        if (CHP <= 0)
+        {
+            theManager.Im_Dead(this);
+            Destroy(gameObject);
+        }
     }
 }

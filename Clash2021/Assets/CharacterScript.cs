@@ -133,7 +133,6 @@ public class CharacterScript:Unit
 
     public override void takeDamage(int how_much_damage)
     {
-        print("Ouch");
     }
 
     public override void repair(int v)
