@@ -133,6 +133,11 @@ public class CharacterScript:Unit
 
     public override void takeDamage(int how_much_damage)
     {
+        CHP -= how_much_damage;
+        if (CHP <= 0)
+        {
+            print("My name is '" + this + "' and I am declaring my untimely demise");
+        }
     }
 
     public override void repair(int v)

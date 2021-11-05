@@ -21,8 +21,6 @@ public class projectile_script : MonoBehaviour
         acceleration = gravity * Vector3.down;
         velocity += acceleration * Time.deltaTime;
         transform.position += velocity * Time.deltaTime;
-
-        
     }
 
     internal void setup_projectile(Unit source, Unit destination,float gravity, float speed)

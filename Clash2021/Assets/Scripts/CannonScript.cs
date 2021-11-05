@@ -44,14 +44,14 @@ public class CannonScript :Building, IHealth
 
                 if (attack_timer <= 0f)
                 {
-                  if(within_attack_range(current_target))
+                    if (within_attack_range(current_target))
                     {
                         Vector3 from_me_to_Character = current_target.transform.position - transform.position;
                         Vector3 direction = from_me_to_Character.normalized;
                         transform.forward = direction;
 
                         GameObject new_CannonBall = Instantiate(CannonBall,
-                       transform.position + new Vector3(2,1.5f), Quaternion.identity);
+                       transform.position + new Vector3(2, 1.5f), Quaternion.identity);
                         projectile_script NewCannonballScript = new_CannonBall.GetComponent<projectile_script>();
                         NewCannonballScript.setup_projectile(this, current_target, 0, 50);
 
@@ -60,6 +60,9 @@ public class CannonScript :Building, IHealth
                         attack_timer = attack_time_interval;
 
                     }
+
+                    else
+                        my_state = building_states.Idle;
                 }
 
                 attack_timer -= Time.deltaTime;
