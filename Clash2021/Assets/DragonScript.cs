@@ -5,11 +5,6 @@ using UnityEngine;
 
 public class DragonScript : CharacterScript
 {
-
-
-
-
-
     Vector3 velocity;
     private float character_speed = 1.5f;
     internal float Melee_Distance = 10;
@@ -82,6 +77,13 @@ public class DragonScript : CharacterScript
 
             }
         }
+
+
+        if (Input.GetKey(KeyCode.DownArrow)) velocity = Vector3.back;
+        if (Input.GetKey(KeyCode.LeftArrow)) velocity = Vector3.left;
+        if (Input.GetKey(KeyCode.RightArrow)) velocity = Vector3.right;
+        if (Input.GetKey(KeyCode.UpArrow)) velocity = Vector3.forward;
+
 
     }
 
