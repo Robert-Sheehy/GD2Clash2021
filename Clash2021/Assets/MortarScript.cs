@@ -10,8 +10,8 @@ public class MortarScript : Building
     float MortarMaxRange = 15.0f;
     float MortarMinRange = 7.0f;
     building_states my_state = building_states.Idle;
-
     
+
 
     // Start is called before the first frame update
     void Start()
@@ -97,12 +97,12 @@ public class MortarScript : Building
 
     }
 
-    public void repair(int v)
+    public void Repair(int v)
     {
         throw new System.NotImplementedException();
     }
 
-    public void takeDamage(int v)
+    public void TakeDamage(int v)
     {
         throw new System.NotImplementedException();
     }
