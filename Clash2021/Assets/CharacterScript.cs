@@ -12,7 +12,9 @@ public class CharacterScript:Unit
     
 
 
-    Vector3 velocity;
+
+    internal Vector3 velocity;
+
     internal float character_speed = 3f;
 
 
@@ -87,22 +89,9 @@ public class CharacterScript:Unit
 
                 break;
 
-
-
         }
-
-
-
-
-
-
-
-
-
         
     }
-
-
 
     internal void ImtheMan(Manager manager)
     {
@@ -120,7 +109,7 @@ public class CharacterScript:Unit
         }
     }
 
-    private bool within_melee_range(Unit current_target)
+    internal bool within_melee_range(Unit current_target)
     {
         return (Vector3.Distance(transform.position, current_target.transform.position) < current_target.Melee_distance);
     }
