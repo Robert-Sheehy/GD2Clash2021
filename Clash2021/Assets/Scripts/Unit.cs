@@ -32,7 +32,6 @@ public abstract class Unit : MonoBehaviour, IHealth
 
     public abstract void repair(int v);
  
-
     internal abstract void is_destroyed(Unit killed_unit);
 
 }

@@ -12,7 +12,9 @@ public class CharacterScript:Unit
     
 
 
+
     internal Vector3 velocity;
+
     internal float character_speed = 3f;
 
 
@@ -120,7 +122,11 @@ public class CharacterScript:Unit
 
     public override void takeDamage(int how_much_damage)
     {
-        print("Ouch");
+        CHP -= how_much_damage;
+        if (CHP <= 0)
+        {
+            print("My name is '" + this + "' and I am declaring my untimely demise");
+        }
     }
 
     public override void repair(int v)
