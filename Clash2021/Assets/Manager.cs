@@ -119,6 +119,22 @@ public class Manager : MonoBehaviour
         return   nearest;
     }
 
+    internal CharacterScript whats_my_target_at(ArcherTower archerTower)
+    {
+        float distance = 100000f;
+        CharacterScript nearest = null;
+        foreach (CharacterScript next_unit in allUnits)
+        {
+            if (Vector3.Distance(archerTower.transform.position, next_unit.transform.position) < distance)
+            {
+                distance = Vector3.Distance(archerTower.transform.position, next_unit.transform.position);
+                nearest = next_unit;
+            }
+        }
+
+        return nearest;
+    }
+
     internal CharacterScript whats_my_Unit(Building building)
     {
         float distance = 100000f;
