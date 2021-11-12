@@ -47,7 +47,7 @@ public class Wizard : CharacterScript
             case Character_states.Move_to_Target:
 
                 if (current_target != null)
-                    if (within_melee_range(current_target))
+                    if (within_range(current_target))
                     {
                         my_state = Character_states.Attack;
                         attack_timer = 0;

@@ -3,26 +3,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Wizard : CharacterScript
+public class CharacterScript:Unit
 {
-    Building current_target;
+    internal enum Character_states { Idle, Move_to_Target, Attack, Death}
 
+    internal Character_states my_state = Character_states.Idle;
+    Renderer myRenderer;
+    
+
+
+
+    internal Vector3 velocity;
+
+    internal float character_speed = 3f;
+
+
+    // Start is called before the first frame update
     void Start()
     {
-        _level = 0;
-        DPS = 150;
-        MHP = 400;
-        CHP = 400;
-        Melee_distance = 20f;
-        character_speed = 10f;
-        attack_time_interval = 0.7f;
-        my_state = Character_states.Idle;
-
+        DPS = 10;
+    
     }
 
     // Update is called once per frame
-    void Update()
+    internal void Update()
     {
+        print(attack_timer);
         switch (my_state)
         {
 
@@ -31,10 +37,11 @@ public class Wizard : CharacterScript
                 if (current_target) my_state = Character_states.Move_to_Target;
                 else
                 {
-                    //current_target = theManager.whats_my_target(this);
+                    current_target = theManager.whats_my_target(this);
                     if (current_target != null)
                     {
                         Vector3 from_me_to_target = current_target.transform.position - transform.position;
+                        from_me_to_target = new Vector3(from_me_to_target.x, 0, from_me_to_target.z);
                         velocity = character_speed * from_me_to_target.normalized;
                         transform.LookAt(current_target.transform);
                         my_state = Character_states.Move_to_Target;
@@ -47,7 +54,7 @@ public class Wizard : CharacterScript
             case Character_states.Move_to_Target:
 
                 if (current_target != null)
-                    if (within_melee_range(current_target))
+                    if (within_range(current_target))
                     {
                         my_state = Character_states.Attack;
                         attack_timer = 0;
@@ -64,14 +71,16 @@ public class Wizard : CharacterScript
             case Character_states.Attack:
 
                 if (current_target)
+                {
                     if (attack_timer <= 0f)
                     {
-                        current_target.takeDamage((int)((float)DPS * attack_time_interval));
+                        print("Attack");
+                        attack(DPS * (int)attack_time_interval);
                         attack_timer = attack_time_interval;
                     }
-
-                    else
-                        my_state = Character_states.Idle;
+                }
+                else
+                    my_state = Character_states.Idle;
 
                 attack_timer -= Time.deltaTime;
 
@@ -83,31 +92,57 @@ public class Wizard : CharacterScript
 
                 break;
 
+
+
         }
 
-        if (Input.GetKeyDown(KeyCode.A))
+
+
+
+
+
+
+
+
+
+    }
+
+    internal virtual void attack(int dmg)
+    {
+        current_target.takeDamage(dmg);
+    }
+
+
+
+    public void assign_target(Unit current_target)
+    {
+        if ((my_state == Character_states.Idle)  || (my_state == Character_states.Move_to_Target))
         {
-            current_target = FindObjectOfType<Building>();
-            if (current_target)
-            {
-                assign_target(current_target);
-            }
+            Vector3 from_me_to_building = current_target.transform.position - transform.position;
+            Vector3 direction = from_me_to_building.normalized;
+            velocity = direction * character_speed;
+            my_state = Character_states.Move_to_Target;
         }
     }
+
 
     internal override void is_destroyed(Unit killed_unit)
     {
         if (current_target == killed_unit)
+        {
             my_state = Character_states.Idle;
+            current_target = null;
+        }
     }
 
     public override void takeDamage(int how_much_damage)
     {
-        throw new NotImplementedException();
+        CHP -= how_much_damage;
+        if (CHP <= 0)
+        {
+            print("My name is '" + this + "' and I am declaring my untimely demise");
+        }
     }
 
-    public override void repair(int v)
-    {
-        throw new NotImplementedException();
-    }
+ 
 }

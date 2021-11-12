@@ -96,6 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 016a2dd18ba24ee4aae56b6533a7b0e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fireball_template: {fileID: 3337721448660309760, guid: 5c52a8420ea823840ab92c071d983876, type: 3}
 --- !u!1 &9028776674215856924
 GameObject:
   m_ObjectHideFlags: 0

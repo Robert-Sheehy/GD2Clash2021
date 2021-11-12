@@ -50,7 +50,7 @@ public class Witch : CharacterScript
                 if (current_target != null)
                         current_target = theManager.whats_my_target(this);
 
-                    if (within_melee_range(current_target))
+                    if (within_range(current_target))
                     {
                         my_state = Character_states.Attack;
                         attack_timer = 0;
