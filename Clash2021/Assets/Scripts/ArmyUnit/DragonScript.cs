@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class DragonScript : CharacterScript
 {
+   
 
     float animation_timer = 0, fire_on_start = 0.75f, fire_on_end = 2.5f, total_animation = 3f;
 
@@ -16,16 +17,16 @@ public class DragonScript : CharacterScript
     // Start is called before the first frame update
     void Start()
     {
-        base.Start();
+        MHP = 500;
         DPS = 100;
-        character_speed = 10;
+        character_speed = 50;
         attack_time_interval = 5;
         min_distance_ranged = 0;
         max_distance_ranged = 15;
         head = find_head();
         fireGO = Instantiate(fireball_template, head);
         fireGO.SetActive(false);
-
+        base.Start();
     }
 
     private Transform find_head()

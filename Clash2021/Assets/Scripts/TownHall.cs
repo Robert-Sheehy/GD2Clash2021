@@ -13,7 +13,7 @@ public class TownHall : Building
     // Start is called before the first frame update
     void Start()
     {
-        MHP = 10000;
+        MHP = 3000;
       
         base.Start();
         

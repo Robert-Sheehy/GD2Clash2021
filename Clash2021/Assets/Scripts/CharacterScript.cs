@@ -46,6 +46,7 @@ public class CharacterScript:Unit
                         velocity = character_speed * from_me_to_target.normalized;
                         transform.LookAt(current_target.transform);
                         my_state = Character_states.Move_to_Target;
+                        
                     }
 
                 }
