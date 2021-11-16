@@ -12,7 +12,7 @@ public class Building  : Unit
 
     internal enum Building_States { Idle, Attacking, Under_Construction, Dying, Dead }
     internal Building_States current_state = Building_States.Idle;
-    Renderer myRenderer;
+    internal Renderer myRenderer;
     
     public int Level
     {
@@ -36,9 +36,9 @@ public class Building  : Unit
     internal float attack_distance;
     private bool is_offensive_building;
 
-
+    new
     // Start is called before the first frame update
-    void Start()
+    internal void Start()
 
 
     {
@@ -57,11 +57,12 @@ public class Building  : Unit
 
         Level = 1;
 
+        base.Start();
 
     }
 
     // Update is called once per frame
-    void Update()
+    internal void Update()
     {
         switch (current_state)
         {

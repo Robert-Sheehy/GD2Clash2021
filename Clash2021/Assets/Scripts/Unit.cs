@@ -17,9 +17,9 @@ public abstract class Unit : MonoBehaviour, IHealth
     internal Unit current_target;
     internal int MHP = 1000, CHP = 1000, _level = 0;
     // Start is called before the first frame update
-    void Start()
+    internal void Start()
     {
-
+        CHP = MHP;
     }
 
     // Update is called once per frame

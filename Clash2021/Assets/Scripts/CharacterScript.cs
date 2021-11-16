@@ -9,26 +9,27 @@ public class CharacterScript:Unit
 
     internal Character_states my_state = Character_states.Idle;
     Renderer myRenderer;
-    
 
 
+    internal Animator character_animator;
 
     internal Vector3 velocity;
 
     internal float character_speed = 3f;
 
-
+    new
     // Start is called before the first frame update
-    void Start()
+    internal void Start()
     {
-        DPS = 10;
-    
+        character_animator = GetComponent<Animator>();
+
+        base.Start();
     }
 
     // Update is called once per frame
     internal void Update()
     {
-        print(attack_timer);
+   
         switch (my_state)
         {
 
@@ -74,7 +75,7 @@ public class CharacterScript:Unit
                 {
                     if (attack_timer <= 0f)
                     {
-                        print("Attack");
+
                         attack(DPS * (int)attack_time_interval);
                         attack_timer = attack_time_interval;
                     }
