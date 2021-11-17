@@ -9,6 +9,7 @@ public class Manager : MonoBehaviour
     public GameObject dragon_prefab_template;
     public GameObject Cannon_Temp;
     public GameObject townhall_template;
+    public GameObject golem_template;
 
 
 
@@ -110,6 +111,23 @@ public class Manager : MonoBehaviour
         {
           
         }
+
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            GameObject new_golemGO = Instantiate(golem_template,
+                            new Vector3(Random.Range(-10f, 10f), 0, Random.Range(-10f, 10f)), Quaternion.identity);
+
+            GolemScript new_GolemScript = new_golemGO.GetComponent<GolemScript>();
+
+            if (new_GolemScript)
+            {
+                new_GolemScript.ImtheMan(this);
+                allCharacters.Add(new_GolemScript);
+            }
+
+        }
+
+    
     }
 
 
