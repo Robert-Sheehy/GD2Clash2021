@@ -9,7 +9,7 @@ public class Manager : MonoBehaviour
     public GameObject dragon_prefab_template;
     public GameObject Cannon_Temp;
     public GameObject townhall_template;
-
+    public GameObject skeleton_template;
 
 
     List<CharacterScript> allCharacters;

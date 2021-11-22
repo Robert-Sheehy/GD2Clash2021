@@ -1360,6 +1360,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4db60be85a97874d9128c5dbec31ece, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skeleton_template: {fileID: 1809680881062764, guid: cbba07a6ac8fd9648a0ee26df90297e9, type: 3}
+  skeletonGO: []
+  magic_template: {fileID: 7512402844031747409, guid: ca053ea11c893814089294ef40c2c0d5, type: 3}
 --- !u!1 &181522
 GameObject:
   m_ObjectHideFlags: 0
