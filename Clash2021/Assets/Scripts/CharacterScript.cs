@@ -9,32 +9,38 @@ public class CharacterScript:Unit
 
     internal Character_states my_state = Character_states.Idle;
     Renderer myRenderer;
-    
 
 
+    internal Animator character_animator;
 
     internal Vector3 velocity;
 
     internal float character_speed = 3f;
 
-
+    new
     // Start is called before the first frame update
-    void Start()
+    internal void Start()
     {
-        DPS = 10;
-    
+        character_animator = GetComponent<Animator>();
+
+        base.Start();
     }
 
     // Update is called once per frame
     internal void Update()
     {
-        print(attack_timer);
+        print("Here");
+   
         switch (my_state)
         {
 
             case Character_states.Idle:
 
-                if (current_target) my_state = Character_states.Move_to_Target;
+                if (current_target)
+                {
+                    my_state = Character_states.Move_to_Target;
+                    character_animator.SetBool("isWalking", true);
+                }
                 else
                 {
                     current_target = theManager.whats_my_target(this);
@@ -45,6 +51,7 @@ public class CharacterScript:Unit
                         velocity = character_speed * from_me_to_target.normalized;
                         transform.LookAt(current_target.transform);
                         my_state = Character_states.Move_to_Target;
+
                     }
 
                 }
@@ -74,7 +81,7 @@ public class CharacterScript:Unit
                 {
                     if (attack_timer <= 0f)
                     {
-                        print("Attack");
+
                         attack(DPS * (int)attack_time_interval);
                         attack_timer = attack_time_interval;
                     }
