@@ -9,6 +9,7 @@ public class Manager : MonoBehaviour
     public GameObject dragon_prefab_template;
     public GameObject Cannon_Temp;
     public GameObject townhall_template;
+    public GameObject wizard_template;
 
 
 
@@ -106,9 +107,18 @@ public class Manager : MonoBehaviour
             }
 
         }
-        if(Input.GetKeyDown(KeyCode.X))
+        if(Input.GetKeyDown(KeyCode.M))
         {
-          
+            GameObject new_characterGO = Instantiate(wizard_template,
+                      new Vector3(Random.Range(-10f, 10f), 0, Random.Range(-10f, 10f)), Quaternion.identity);
+
+            CharacterScript newCharacterScript = new_characterGO.GetComponent<CharacterScript>();
+
+            if (newCharacterScript)
+            {
+                newCharacterScript.ImtheMan(this);
+                allCharacters.Add(newCharacterScript);
+            }
         }
     }
 
