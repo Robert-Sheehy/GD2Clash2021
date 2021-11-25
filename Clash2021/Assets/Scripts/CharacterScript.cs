@@ -29,13 +29,18 @@ public class CharacterScript:Unit
     // Update is called once per frame
     internal void Update()
     {
+        print("Here");
    
         switch (my_state)
         {
 
             case Character_states.Idle:
 
-                if (current_target) my_state = Character_states.Move_to_Target;
+                if (current_target)
+                {
+                    my_state = Character_states.Move_to_Target;
+                    character_animator.SetBool("isWalking", true);
+                }
                 else
                 {
                     current_target = theManager.whats_my_target(this);
@@ -46,7 +51,7 @@ public class CharacterScript:Unit
                         velocity = character_speed * from_me_to_target.normalized;
                         transform.LookAt(current_target.transform);
                         my_state = Character_states.Move_to_Target;
-                        
+
                     }
 
                 }
