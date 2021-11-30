@@ -16,19 +16,19 @@ public class Wizard : CharacterScript
         Melee_distance = 20f;
         character_speed = 10f;
         attack_time_interval = 0.7f;
-        my_state = Character_states.Idle;
+        current_state = Unit_States.Idle;
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        switch (my_state)
+        switch (current_state)
         {
 
-            case Character_states.Idle:
+            case Unit_States.Idle:
 
-                if (current_target) my_state = Character_states.Move_to_Target;
+                if (current_target) current_state = Unit_States.Move_to_Target;
                 else
                 {
                     //current_target = theManager.whats_my_target(this);
@@ -37,31 +37,31 @@ public class Wizard : CharacterScript
                         Vector3 from_me_to_target = current_target.transform.position - transform.position;
                         velocity = character_speed * from_me_to_target.normalized;
                         transform.LookAt(current_target.transform);
-                        my_state = Character_states.Move_to_Target;
+                        current_state = Unit_States.Move_to_Target;
                     }
 
                 }
 
                 break;
 
-            case Character_states.Move_to_Target:
+            case Unit_States.Move_to_Target:
 
                 if (current_target != null)
                     if (within_range(current_target))
                     {
-                        my_state = Character_states.Attack;
+                        current_state = Unit_States.Attacking;
                         attack_timer = 0;
                         velocity = Vector3.zero;
                     }
                     else
                     {
-                        my_state = Character_states.Idle;
+                        current_state = Unit_States.Idle;
                     }
 
                 transform.position += velocity * Time.deltaTime;
                 break;
 
-            case Character_states.Attack:
+            case Unit_States.Attacking:
 
                 if (current_target)
                     if (attack_timer <= 0f)
@@ -71,14 +71,14 @@ public class Wizard : CharacterScript
                     }
 
                     else
-                        my_state = Character_states.Idle;
+                        current_state = Unit_States.Idle;
 
                 attack_timer -= Time.deltaTime;
 
                 break;
 
 
-            case Character_states.Death:
+            case Unit_States.Dead:
 
 
                 break;
@@ -98,7 +98,7 @@ public class Wizard : CharacterScript
     internal override void is_destroyed(Unit killed_unit)
     {
         if (current_target == killed_unit)
-            my_state = Character_states.Idle;
+            current_state = Unit_States.Idle;
     }
 
     public override void takeDamage(int how_much_damage)

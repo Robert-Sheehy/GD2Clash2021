@@ -43,6 +43,12 @@ public class DragonScript : CharacterScript
         // Update is called once per frame
         void Update()
     {
+
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+
+            takeDamage(45);
+        }
         if (isAttacking)
         {
             animation_timer += Time.deltaTime;
@@ -51,7 +57,7 @@ public class DragonScript : CharacterScript
 
         }
 
-        if (my_state != Character_states.Attack)
+        if (current_state != Unit_States.Attacking)
         {
             if (isAttacking)
             {
@@ -61,7 +67,10 @@ public class DragonScript : CharacterScript
             }
         }
 
-       
+       if (current_state == Unit_States.Dead)
+        {
+
+        }
         base.Update();
  
     }
@@ -78,7 +87,7 @@ public class DragonScript : CharacterScript
         {
             isAttacking = true;
             animation_timer = 0;
-            character_animator.SetBool("isAttacking", (my_state == Character_states.Attack));
+            character_animator.SetBool("isAttacking", (current_state == Unit_States.Attacking));
         }
 
         

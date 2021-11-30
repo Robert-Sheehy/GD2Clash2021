@@ -29,6 +29,19 @@ public class Manager : MonoBehaviour
         }
     }
 
+    internal void spawn_th_at(Vector3 point)
+    {
+        GameObject new_buildingGO = Instantiate(townhall_template,
+                point, Quaternion.identity);
+        Building new_buildingScript = new_buildingGO.GetComponent<Building>();
+
+        if (new_buildingScript)
+        {
+            new_buildingScript.ImtheMan(this);
+            allBuildings.Add(new_buildingScript);
+        }
+    }
+
     internal void AddChar(Vector3 position)
     {
         GameObject new_charGO = Instantiate(character_prefab_template, position, Quaternion.identity);
@@ -40,6 +53,20 @@ public class Manager : MonoBehaviour
             allCharacters.Add(new_characterScript);
         }
 
+    }
+
+    internal void spawn_drag_at(Vector3 point)
+    {
+        GameObject new_characterGO = Instantiate(dragon_prefab_template,
+                      point, Quaternion.identity);
+
+        DragonScript newDragonScript = new_characterGO.GetComponent<DragonScript>();
+
+        if (newDragonScript)
+        {
+            newDragonScript.ImtheMan(this);
+            allCharacters.Add(newDragonScript);
+        }
     }
 
     // Start is called before the first frame update
@@ -175,7 +202,7 @@ public class Manager : MonoBehaviour
             Building nearest = null;
             CharacterScript characterScript = unit as CharacterScript;
             foreach (Building next_building in allBuildings)
-            {   if ((next_building.current_state != Building.Building_States.Dying) && (next_building.current_state != Building.Building_States.Dead))
+            {   if ((next_building.current_state != Building.Unit_States.Dying) && (next_building.current_state != Building.Unit_States.Dead))
                 if ((Vector3.Distance(characterScript.transform.position, next_building.transform.position) < distance))
                 {
                     distance = Vector3.Distance(characterScript.transform.position, next_building.transform.position);
