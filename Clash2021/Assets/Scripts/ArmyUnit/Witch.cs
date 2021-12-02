@@ -5,12 +5,11 @@ using UnityEngine;
 
 public class Witch : CharacterScript
 {
-
     float animation_timer = 0, magic_on_start = 0f, magic_on_end = 0.75f;
     float respawn_timer = 0;
     bool isAttacking = false;
-    public GameObject skeleton_template;
-    public GameObject[] skeletonGO;
+
+    
     Transform wand;
     GameObject magicGO;
     public GameObject magic_template;
@@ -24,7 +23,7 @@ public class Witch : CharacterScript
         _level = 0;
         attack_time_interval = /*0.7*/ 1f;  //Character would not attack when float was set to 0.7f. why?
         Melee_distance = 12f;
-        my_state = Character_states.Idle;
+        current_state = Unit_States.Idle;
         character_speed = 12f;
         wand = find_wand();
         magicGO = Instantiate(magic_template, wand);
@@ -34,6 +33,7 @@ public class Witch : CharacterScript
 
     private Transform find_wand()
     {
+
         foreach (Transform bone in GetComponentsInChildren<Transform>())
             if (bone.name == "Wand")
                 return bone;
@@ -54,7 +54,7 @@ public class Witch : CharacterScript
 
         }
 
-        if (my_state != Character_states.Attack)
+        if (current_state != Unit_States.Attacking)
         {
             if (isAttacking)
             {
@@ -69,15 +69,15 @@ public class Witch : CharacterScript
         if (respawn_timer > 7f)
         {
             respawn_timer = 0f;
-            skeletonGO = new GameObject[4];
-            for (int i = 0; i < skeletonGO.Length; i++)
-            {
-                GameObject clone = (GameObject)Instantiate(skeleton_template);
-                skeletonGO[i] = clone;
-            }
+
+            theManager.spawn_skeletons(this);
+
         }
            
+
         base.Update();
+       
+
     }
 
     internal override void attack(int dmg)

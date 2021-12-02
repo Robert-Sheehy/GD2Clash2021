@@ -10,6 +10,8 @@ public class Manager : MonoBehaviour
     public GameObject Cannon_Temp;
     public GameObject townhall_template;
     public GameObject skeleton_template;
+    public GameObject witch_template;
+   
 
 
     List<CharacterScript> allCharacters;
@@ -19,6 +21,19 @@ public class Manager : MonoBehaviour
     {
         GameObject new_buildingGO = Instantiate(townhall_template,
                 position, Quaternion.identity);
+        Building new_buildingScript = new_buildingGO.GetComponent<Building>();
+
+        if (new_buildingScript)
+        {
+            new_buildingScript.ImtheMan(this);
+            allBuildings.Add(new_buildingScript);
+        }
+    }
+
+    internal void spawn_th_at(Vector3 point)
+    {
+        GameObject new_buildingGO = Instantiate(townhall_template,
+                point, Quaternion.identity);
         Building new_buildingScript = new_buildingGO.GetComponent<Building>();
 
         if (new_buildingScript)
@@ -41,6 +56,40 @@ public class Manager : MonoBehaviour
 
     }
 
+    internal void spawn_drag_at(Vector3 point)
+    {
+        GameObject new_characterGO = Instantiate(dragon_prefab_template,
+                      point, Quaternion.identity);
+
+        DragonScript newDragonScript = new_characterGO.GetComponent<DragonScript>();
+
+        if (newDragonScript)
+        {
+            newDragonScript.ImtheMan(this);
+            allCharacters.Add(newDragonScript);
+        }
+    }
+
+    internal void spawn_skeletons(Witch witch)
+    {
+      
+        for (int i = 0; i <4; i++)
+        {
+            GameObject clone = (GameObject)Instantiate(skeleton_template,position_around(witch.transform.position,i), witch.transform.rotation);
+            Skeleton spawned_skeleton_script = clone.GetComponent<Skeleton>();
+            spawned_skeleton_script.ImtheMan(this);
+            allCharacters.Add(spawned_skeleton_script);
+
+         
+        }
+    }
+
+    private Vector3 position_around(Vector3 position, int i)
+    {
+        float radius = 1;
+        return new Vector3(position.x + radius * Mathf.Cos(i * Mathf.PI / 2), 0, position.z + radius * Mathf.Sin(i * Mathf.PI / 2));
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -56,6 +105,22 @@ public class Manager : MonoBehaviour
         {
            GameObject new_characterGO = Instantiate(character_prefab_template,
                            new Vector3(Random.Range(-10f, 10f), 0, Random.Range(-10f, 10f)), Quaternion.identity);
+
+            CharacterScript newCharacterScript = new_characterGO.GetComponent<CharacterScript>();
+
+            if (newCharacterScript)
+            {
+                newCharacterScript.ImtheMan(this);
+                allCharacters.Add(newCharacterScript);
+            }
+
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            GameObject new_characterGO = Instantiate(witch_template,
+                            new Vector3(Random.Range(-10f, 10f), 0, Random.Range(-10f, 10f)), Quaternion.identity);
 
             CharacterScript newCharacterScript = new_characterGO.GetComponent<CharacterScript>();
 
@@ -158,7 +223,7 @@ public class Manager : MonoBehaviour
             Building nearest = null;
             CharacterScript characterScript = unit as CharacterScript;
             foreach (Building next_building in allBuildings)
-            {   if ((next_building.current_state != Building.Building_States.Dying) && (next_building.current_state != Building.Building_States.Dead))
+            {   if ((next_building.current_state != Building.Unit_States.Dying) && (next_building.current_state != Building.Unit_States.Dead))
                 if ((Vector3.Distance(characterScript.transform.position, next_building.transform.position) < distance))
                 {
                     distance = Vector3.Distance(characterScript.transform.position, next_building.transform.position);
