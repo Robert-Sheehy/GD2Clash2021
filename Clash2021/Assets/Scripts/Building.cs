@@ -32,7 +32,7 @@ public class Building  : Unit
 
 
     internal float attack_distance;
-    private bool is_offensive_building;
+    internal bool is_offensive_building;
 
     new
     // Start is called before the first frame update
@@ -81,8 +81,11 @@ public class Building  : Unit
                 {
                     if (attack_timer <= 0f)
                     {
-                        print("Attack");
-                        attack(DPS * (int)attack_time_interval);
+                        Vector3 from_me_to_Character = current_target.transform.position - transform.position;
+                        Vector3 direction = from_me_to_Character.normalized;
+                        transform.forward = direction;
+
+                        current_target.takeDamage((int)((float)DPS * attack_time_interval));
                         attack_timer = attack_time_interval;
                     }
                 }
