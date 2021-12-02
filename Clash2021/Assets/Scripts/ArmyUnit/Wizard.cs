@@ -13,21 +13,27 @@ public class Wizard : CharacterScript
         CHP = 400;
         Melee_distance = 20f;
         character_speed = 10f;
+
         attack_time_interval = 0.5f;
-        my_state = Character_states.Idle;
+
+        current_state = Unit_States.Idle;
+
     }
 
     // Update is called once per frame
     void Update()
     {
+
         base.Update();
 
+
+        
 
     }
     internal override void is_destroyed(Unit killed_unit)
     {
         if (current_target == killed_unit)
-            my_state = Character_states.Idle;
+            current_state = Unit_States.Idle;
     }
 
     internal void levelUp()

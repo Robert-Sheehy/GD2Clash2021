@@ -14,7 +14,7 @@ public class Witch : CharacterScript
         _level = 0;
         attack_time_interval = 0.7f;
         Melee_distance = 12f;
-        my_state = Character_states.Idle;
+        current_state = Unit_States.Idle;
         character_speed = 12f;
     }
 
@@ -28,7 +28,7 @@ public class Witch : CharacterScript
     internal override void is_destroyed(Unit killed_unit)
     {
         if (current_target == killed_unit)
-            my_state = Character_states.Idle;
+            current_state = Unit_States.Idle;
     }
 
     internal void levelUp()
