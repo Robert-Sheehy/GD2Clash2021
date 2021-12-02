@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Manager : MonoBehaviour
@@ -10,6 +11,7 @@ public class Manager : MonoBehaviour
     public GameObject Cannon_Temp;
     public GameObject townhall_template;
     public GameObject witch_template;
+    public GameObject player_info_template;
 
 
 
@@ -114,14 +116,16 @@ public class Manager : MonoBehaviour
         {
             GameObject new_characterGO = Instantiate(dragon_prefab_template,
                             new Vector3(Random.Range(-10f, 10f), 10, Random.Range(-10f, 10f)), Quaternion.identity);
-
+          
             DragonScript newDragonScript = new_characterGO.GetComponent<DragonScript>();
 
             if (newDragonScript)
             {
                 newDragonScript.ImtheMan(this);
                 allCharacters.Add(newDragonScript);
+                
             }
+            add_info_bar(newDragonScript);
 
         }
         if (Input.GetKeyDown(KeyCode.T))
@@ -155,6 +159,24 @@ public class Manager : MonoBehaviour
           
         }
     }
+
+    void add_info_bar(Unit new_unit)
+    {
+
+
+        GameObject infoGO = Instantiate(player_info_template, new_unit.transform.position + 15* Vector3.up, Quaternion.identity, new_unit.transform);
+
+        TextMeshPro text = GetComponent<TextMeshPro>();
+        text.SetText(new_unit.CHP.ToString());
+        play_info_script info = infoGO.GetComponent<play_info_script>();
+
+        if (info)
+        {
+            info.your_owner_is(new_unit);
+        }
+        
+    }
+
 
 
     internal void Im_Dying(Unit unit)
