@@ -217,7 +217,7 @@ public class Manager : MonoBehaviour
         {
 
             float distance = 100000f;
-            Building nearest = null;
+            CharacterScript nearest = null;
 
 
             Building buildingScript = unit as Building;
@@ -226,7 +226,7 @@ public class Manager : MonoBehaviour
                 if (Vector3.Distance(buildingScript.transform.position, next_character.transform.position) < distance)
                 {
                     distance = Vector3.Distance(buildingScript.transform.position, next_character.transform.position);
-                    nearest = buildingScript;
+                    nearest = next_character;
                 }
             }
 
