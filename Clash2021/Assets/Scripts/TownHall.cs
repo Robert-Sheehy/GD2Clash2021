@@ -21,7 +21,7 @@ public class TownHall : Building
     new
     // Update is called once per frame
     void Update()
-    {   if (current_state == Building_States.Dying)
+    {   if (current_state == Unit_States.Dying)
             apply_dying_animation();
         base.Update();
     }

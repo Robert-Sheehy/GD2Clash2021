@@ -5,9 +5,8 @@ using UnityEngine;
 
 public class CharacterScript:Unit
 {
-    internal enum Character_states { Idle, Move_to_Target, Attack, Death}
 
-    internal Character_states my_state = Character_states.Idle;
+ 
     Renderer myRenderer;
 
 
@@ -30,12 +29,16 @@ public class CharacterScript:Unit
     internal void Update()
     {
    
-        switch (my_state)
+        switch (current_state)
         {
 
-            case Character_states.Idle:
+            case Unit_States.Idle:
 
-                if (current_target) my_state = Character_states.Move_to_Target;
+                if (current_target)
+                {
+                    current_state = Unit_States.Move_to_Target;
+                    character_animator.SetBool("isWalking", true);
+                }
                 else
                 {
                     current_target = theManager.whats_my_target(this);
@@ -45,32 +48,32 @@ public class CharacterScript:Unit
                         from_me_to_target = new Vector3(from_me_to_target.x, 0, from_me_to_target.z);
                         velocity = character_speed * from_me_to_target.normalized;
                         transform.LookAt(current_target.transform);
-                        my_state = Character_states.Move_to_Target;
-                        
+                        current_state = Unit_States.Move_to_Target;
+
                     }
 
                 }
 
                 break;
 
-            case Character_states.Move_to_Target:
+            case Unit_States.Move_to_Target:
 
                 if (current_target != null)
                     if (within_range(current_target))
                     {
-                        my_state = Character_states.Attack;
+                        current_state = Unit_States.Attacking;
                         attack_timer = 0;
                         velocity = Vector3.zero;
                     }
                     else
                     {
-                        my_state = Character_states.Idle;
+                        current_state = Unit_States.Idle;
                     }
 
                 transform.position += velocity * Time.deltaTime;
                 break;
 
-            case Character_states.Attack:
+            case Unit_States.Attacking:
 
                 if (current_target)
                 {
@@ -82,15 +85,15 @@ public class CharacterScript:Unit
                     }
                 }
                 else
-                    my_state = Character_states.Idle;
+                    current_state = Unit_States.Idle;
 
                 attack_timer -= Time.deltaTime;
 
                 break;
 
 
-            case Character_states.Death:
-
+            case Unit_States.Dead:
+                    
 
                 break;
 
@@ -118,12 +121,12 @@ public class CharacterScript:Unit
 
     public void assign_target(Unit current_target)
     {
-        if ((my_state == Character_states.Idle)  || (my_state == Character_states.Move_to_Target))
+        if ((current_state == Unit_States.Idle)  || (current_state == Unit_States.Move_to_Target))
         {
             Vector3 from_me_to_building = current_target.transform.position - transform.position;
             Vector3 direction = from_me_to_building.normalized;
             velocity = direction * character_speed;
-            my_state = Character_states.Move_to_Target;
+            current_state = Unit_States.Move_to_Target;
         }
     }
 
@@ -132,7 +135,7 @@ public class CharacterScript:Unit
     {
         if (current_target == killed_unit)
         {
-            my_state = Character_states.Idle;
+            current_state = Unit_States.Idle;
             current_target = null;
         }
     }
@@ -142,6 +145,9 @@ public class CharacterScript:Unit
         CHP -= how_much_damage;
         if (CHP <= 0)
         {
+            current_state = Unit_States.Dead;
+          //  character_animator.SetBool("Dead", true);
+          //  theManager.spawnMiniGols(this);
             print("My name is '" + this + "' and I am declaring my untimely demise");
         }
     }

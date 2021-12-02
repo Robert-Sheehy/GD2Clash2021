@@ -14,7 +14,7 @@ public class Skeleton : CharacterScript
         _level = 0;
         attack_time_interval = 1f;
         Melee_distance = 3f;
-        my_state = Character_states.Idle;
+        current_state = Unit_States.Idle;
         character_speed = 24f;
         base.Start();
     }
