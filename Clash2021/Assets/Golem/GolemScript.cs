@@ -10,6 +10,8 @@ public class GolemScript : CharacterScript
 
     bool Attacking = false;
 
+    bool Dying = false;
+
     Transform Hips;
 
     GameObject smoke;
@@ -18,11 +20,27 @@ public class GolemScript : CharacterScript
 
     float smoke_on_start = 0.75f, smoke_on_end = 2.5f;
 
+    internal bool isMiniGolem = false;
+
+    internal int numberOfMiniGols = 3;
+
+    internal float gRadius = 5f;
+   
+
     new
     void Start()
     {
-        DPS = 120;
-        MHP = 800;
+        if(isMiniGolem) {
+            DPS = 80;
+            MHP = 500;
+        }
+        else
+        {
+            DPS = 120;
+            MHP = 800;
+        }
+
+        dying_timer = 5f;
         character_speed = 5;
         attack_time_interval = 2.3f;
         attack_timer = 0f;
@@ -49,21 +67,62 @@ public class GolemScript : CharacterScript
     {
         if (Attacking)
         {
-            animation_timer += Time.deltaTime;
+            
             if (animation_timer > 3f) animation_timer = 0f;
-            smoke.SetActive((animation_timer > smoke_on_start) && (animation_timer < smoke_on_end));
+            
 
         }
 
-        if (my_state != Character_states.Attack)
+        if (current_state == Unit_States.Attacking)
         {
                 Attacking = false;
-                smoke.SetActive(false);
                 character_animator.SetBool("Attacking", false);
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+
+            takeDamage(45);
+        }
+
+        if (Dying)
+        {
+            animation_timer += Time.deltaTime;
+            if (animation_timer > 3f) animation_timer = 0f;
+            smoke.SetActive((animation_timer > smoke_on_start) && (animation_timer < smoke_on_end));
+           
+        }
+
+        if (current_state != Unit_States.Dead)
+        {
+            if (Dying)
+            {
+                Dying = false;
+                smoke.SetActive(false);
+                character_animator.SetBool("Dying", false);
+                
+            }
         }
 
         base.Update();
 
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            takeDamage(200);
+        }
+
+        if(current_state == Unit_States.Dead)
+        {
+            dying_time -= Time.deltaTime;
+
+            if (dying_time <= 0)
+            {
+                Destroy(gameObject);
+            }
+
+
+        }
     }
 
     internal override void attack(int damage)
@@ -78,10 +137,24 @@ public class GolemScript : CharacterScript
         {
             Attacking = true;
             animation_timer = 0;
-            character_animator.SetBool("Attacking", (my_state == Character_states.Attack));
+            character_animator.SetBool("Attacking", (current_state == Unit_States.Attacking));
         }
 
 
+    }
+
+    public override void takeDamage(int how_much_damage)
+    {
+        CHP -= how_much_damage;
+        if (CHP <= 0)
+        {
+            current_state = Unit_States.Dead;
+            theManager.Im_Dead(this);
+            Dying = true;
+            animation_timer = 0;
+            character_animator.SetBool("Dying", (current_state == Unit_States.Dead));
+            
+        }
     }
 
 }

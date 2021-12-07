@@ -48,3 +48,5 @@ MonoBehaviour:
   Cannon_Temp: {fileID: 1784019077865158394, guid: 3b9bf39b394832d479cdee92032737fe, type: 3}
   townhall_template: {fileID: 4782293019790099236, guid: 5aef40c0a6bc7be4ebe11552a0e35c14, type: 3}
   witch_template: {fileID: 1498445360703867598, guid: 0a2d44710b7bcba4b8357e6f6f201419, type: 3}
+  golem_Template: {fileID: 831646984402787804, guid: 8a4042321642b2a48a6ca86d7bc4f071, type: 3}
+  miniGolem_Template: {fileID: 1130303598536720349, guid: d72c276435dd03c439ff1b2133169a86, type: 3}

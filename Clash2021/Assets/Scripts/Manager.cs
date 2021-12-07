@@ -10,6 +10,8 @@ public class Manager : MonoBehaviour
     public GameObject Cannon_Temp;
     public GameObject townhall_template;
     public GameObject witch_template;
+    public GameObject golem_Template;
+    public GameObject miniGolem_Template;
 
 
 
@@ -154,6 +156,18 @@ public class Manager : MonoBehaviour
         {
           
         }
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            GameObject new_Golem = Instantiate(golem_Template,
+                new Vector3(Random.Range(-60f, 60f), 0, Random.Range(-60f, 60f)), Quaternion.identity);
+            CharacterScript new_GolemScript = new_Golem.GetComponent<GolemScript>();
+
+            if (new_GolemScript)
+            {
+                new_GolemScript.ImtheMan(this);
+                allCharacters.Add(new_GolemScript);
+            }
+        }
     }
 
 
@@ -190,6 +204,37 @@ public class Manager : MonoBehaviour
             allCharacters.Remove(killed_character);
         }
 
+        if(unit is GolemScript)
+        {
+            spawn_MiniGolem(unit as GolemScript);
+        }
+
+    }
+
+    private void spawn_MiniGolem(GolemScript golemScript)
+    {
+        
+        if (!golemScript.isMiniGolem)
+        {
+            for (int i = 0; i < golemScript.numberOfMiniGols; i++)
+            {
+                GameObject new_Golem = Instantiate(miniGolem_Template,golemScript.transform.position +
+                new Vector3(golemScript.gRadius * Mathf.Cos(i*2*Mathf.PI/golemScript.numberOfMiniGols),0, golemScript.gRadius * Mathf.Sin(i * 2 * Mathf.PI / golemScript.numberOfMiniGols)), golemScript.transform.rotation);
+                GolemScript new_GolemScript = new_Golem.GetComponent<GolemScript>();
+
+                if (new_GolemScript)
+                {
+                    new_GolemScript.isMiniGolem = true;
+                    new_GolemScript.ImtheMan(this);
+                    allCharacters.Add(new_GolemScript);
+                }
+
+            }
+
+
+        }
+        
+        
     }
 
     internal Unit whats_my_target(Unit unit)

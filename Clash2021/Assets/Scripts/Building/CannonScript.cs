@@ -18,7 +18,7 @@ public class CannonScript :Building, IHealth
     // Update is called once per frame
     void Update()
     {
-        if (current_state == Building_States.Attacking && current_target && attack_timer <= 0f && within_range(current_target))
+        if (current_state == Unit_States.Attacking && current_target && attack_timer <= 0f && within_range(current_target))
         {
 
             GameObject new_CannonBall = Instantiate(CannonBall,
