@@ -18,14 +18,14 @@ public class CannonScript :Building, IHealth
     // Update is called once per frame
     void Update()
     {
-        if (current_state == Building_States.Attacking && current_target && attack_timer <= 0f && within_range(current_target))
-        {
+        //if (current_state == Building_States.Attacking && current_target && attack_timer <= 0f && within_range(current_target))
+        //{
 
             GameObject new_CannonBall = Instantiate(CannonBall,
                   transform.position + new Vector3(2, 1.5f), Quaternion.identity);
             projectile_script NewCannonballScript = new_CannonBall.GetComponent<projectile_script>();
             NewCannonballScript.setupProjectile(transform.position,current_target.transform.position,0,10,theManager,DPS);
-        }
+        //}
 
 
     }
