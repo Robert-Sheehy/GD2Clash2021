@@ -10,9 +10,7 @@ public class Building  : Unit
 {
     
 
-    internal enum Building_States { Idle, Attacking, Under_Construction, Dying, Dead }
-    internal Building_States current_state = Building_States.Idle;
-    internal Renderer myRenderer;
+
     
     public int Level
     {
@@ -34,7 +32,7 @@ public class Building  : Unit
 
 
     internal float attack_distance;
-    private bool is_offensive_building;
+    internal bool is_offensive_building;
 
     new
     // Start is called before the first frame update
@@ -67,44 +65,47 @@ public class Building  : Unit
         switch (current_state)
         {
 
-            case Building_States.Idle:
+            case Unit_States.Idle:
 
                 if (is_offensive_building)
                     if (current_target)
-                        current_state = Building_States.Attacking;
+                        current_state = Unit_States.Attacking;
                     else
                         current_target = theManager.whats_my_target(this);
 
                 break;
 
-            case Building_States.Attacking:
+            case Unit_States.Attacking:
 
                 if (current_target)
                 {
                     if (attack_timer <= 0f)
                     {
-                        print("Attack");
-                        attack(DPS * (int)attack_time_interval);
+                        Vector3 from_me_to_Character = current_target.transform.position - transform.position;
+                        Vector3 direction = from_me_to_Character.normalized;
+                        transform.forward = direction;
+
+                        current_target.takeDamage((int)((float)DPS * attack_time_interval));
                         attack_timer = attack_time_interval;
                     }
                 }
                 else
-                    current_state = Building_States.Idle;
+                    current_state = Unit_States.Idle;
 
                 attack_timer -= Time.deltaTime;
 
                 break;
 
-            case Building_States.Dying:
+            case Unit_States.Dying:
                 dying_timer -= Time.deltaTime;
                 if (dying_timer < 0)
-                    current_state = Building_States.Dead;
+                    current_state = Unit_States.Dead;
 
 
 
                 break;
 
-            case Building_States.Dead:
+            case Unit_States.Dead:
 
                 theManager.Im_Dead(this);
                 Destroy(gameObject);
@@ -141,7 +142,7 @@ public class Building  : Unit
         {
        
             myRenderer.material.color = Color.red;
-            current_state = Building_States.Dying;
+            current_state = Unit_States.Dying;
             dying_timer = dying_time;
             theManager.Im_Dying(this);
         }
