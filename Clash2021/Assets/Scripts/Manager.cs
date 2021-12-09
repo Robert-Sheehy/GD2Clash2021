@@ -11,8 +11,6 @@ public class Manager : MonoBehaviour
     public GameObject townhall_template;
     public GameObject witch_template;
 
-
-
     List<CharacterScript> allCharacters;
     List<Building> allBuildings;
 
@@ -69,6 +67,20 @@ public class Manager : MonoBehaviour
         }
     }
 
+    internal void spawn_Cannon_at(Vector3 point)
+    {
+        GameObject new_characterGO = Instantiate(Cannon_Temp,
+                      point, Quaternion.identity);
+
+        CannonScript newcannonScript = new_characterGO.GetComponent<CannonScript>();
+
+        if (newcannonScript)
+        {
+            newcannonScript.ImtheMan(this);
+            allBuildings.Add(newcannonScript);
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -94,7 +106,6 @@ public class Manager : MonoBehaviour
             }
 
         }
-
 
         if (Input.GetKeyDown(KeyCode.W))
         {
