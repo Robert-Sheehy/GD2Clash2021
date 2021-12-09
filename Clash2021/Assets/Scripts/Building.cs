@@ -65,7 +65,7 @@ public class Building  : Unit
             case Unit_States.Idle:
 
                 if (is_offensive_building)
-                    if (current_target)
+                    if (current_target && within_range(current_target))
                         current_state = Unit_States.Attacking;
                     else
                         current_target = theManager.whats_my_target(this);
@@ -74,7 +74,7 @@ public class Building  : Unit
 
             case Unit_States.Attacking:
 
-                if (current_target)
+                if (current_target && within_range(current_target))
                 {
                     if (attack_timer <= 0f)
                     {
