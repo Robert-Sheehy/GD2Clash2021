@@ -44,6 +44,7 @@ public class GolemScript : CharacterScript
         character_speed = 5;
         attack_time_interval = 2.3f;
         attack_timer = 0f;
+        Melee_distance = 3f;
         Hips = find_Hips();
         smoke = Instantiate(smoke_template, Hips);
         smoke.SetActive(false);
@@ -67,24 +68,19 @@ public class GolemScript : CharacterScript
     {
         if (Attacking)
         {
-            
-            if (animation_timer > 3f) animation_timer = 0f;
-            
-
+            animation_timer += Time.deltaTime;
+        
         }
 
-        if (current_state == Unit_States.Attacking)
+        if (current_state != Unit_States.Attacking)
         {
-                Attacking = false;
+            if (Attacking)
+            {
+                Attacking = false;          
                 character_animator.SetBool("Attacking", false);
+            }
         }
 
-
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-
-            takeDamage(45);
-        }
 
         if (Dying)
         {
@@ -105,29 +101,31 @@ public class GolemScript : CharacterScript
             }
         }
 
-        base.Update();
-
         if (Input.GetKeyDown(KeyCode.P))
         {
             takeDamage(200);
         }
 
-        if(current_state == Unit_States.Dead)
+        if (current_state == Unit_States.Dead)
         {
             dying_time -= Time.deltaTime;
 
             if (dying_time <= 0)
             {
-                Destroy(gameObject);
+                Destroy(gameObject, 3);
             }
 
 
         }
+
+        base.Update();
+
+        
     }
 
     internal override void attack(int damage)
     {
-        
+        current_target.takeDamage(damage);
 
         if (Attacking)
         {
