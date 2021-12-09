@@ -17,7 +17,9 @@ public class wizard : CharacterScript
         Melee_distance = 20f;
         character_speed = 10f;
         attack_time_interval = 0.7f;
-        //my_state = Character_states.Idle;
+
+        current_state = Unit_States.Idle;
+
     }
 
     new
