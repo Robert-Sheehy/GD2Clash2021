@@ -10,6 +10,7 @@ public class Manager : MonoBehaviour
     public GameObject Cannon_Temp;
     public GameObject townhall_template;
     public GameObject witch_template;
+    public GameObject mortar_tower_template;
 
 
 
@@ -152,7 +153,18 @@ public class Manager : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.X))
         {
-          
+            {
+                GameObject new_MortarGO = Instantiate(mortar_tower_template,
+                    new Vector3(Random.Range(-70f, 70f), 0, Random.Range(-70f, 70f)), Quaternion.identity);
+                Building new_MortarScript = new_MortarGO.GetComponent<MortarScript>();
+
+                if (new_MortarScript)
+                {
+                    new_MortarScript.ImtheMan(this);
+                    allBuildings.Add(new_MortarScript);
+                }
+
+            }
         }
     }
 

@@ -68,7 +68,7 @@ public class Building  : Unit
             case Unit_States.Idle:
 
                 if (is_offensive_building)
-                    if (current_target && within_range(current_target))
+                    if (current_target )
                         current_state = Unit_States.Attacking;
                     else
                         current_target = theManager.whats_my_target(this);
@@ -77,15 +77,15 @@ public class Building  : Unit
 
             case Unit_States.Attacking:
 
-                if (current_target && within_range(current_target))
+                if (current_target)
                 {
                     if (attack_timer <= 0f)
                     {
                         Vector3 from_me_to_Character = current_target.transform.position - transform.position;
-                        Vector3 direction = from_me_to_Character.normalized;
+                        Vector3 direction = new Vector3(from_me_to_Character.x,0, from_me_to_Character.z).normalized;
                         transform.forward = direction;
+                        attack((int)((float)DPS * attack_time_interval));
 
-                        current_target.takeDamage((int)((float)DPS * attack_time_interval));
                         attack_timer = attack_time_interval;
                     }
                 }
@@ -117,6 +117,7 @@ public class Building  : Unit
 
     internal virtual void attack(int dmg)
     {
+        print("Hello");
         current_target.takeDamage(dmg);
     }
 

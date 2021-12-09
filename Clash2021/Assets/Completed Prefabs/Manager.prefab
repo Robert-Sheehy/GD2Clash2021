@@ -43,8 +43,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5566abb798ef3794b97f01988ad4c03c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  character_prefab_template: {fileID: 6002723005628740230, guid: ef01da653ebeb694d844ab39798efa7d, type: 3}
-  dragon_prefab_template: {fileID: 9028776674215855170, guid: 9e2c775428fcf5e4bbc8992e0b5e0522, type: 3}
-  Cannon_Temp: {fileID: 1784019077865158394, guid: 3b9bf39b394832d479cdee92032737fe, type: 3}
-  townhall_template: {fileID: 4782293019790099236, guid: 5aef40c0a6bc7be4ebe11552a0e35c14, type: 3}
-  witch_template: {fileID: 1498445360703867598, guid: 0a2d44710b7bcba4b8357e6f6f201419, type: 3}
+  character_prefab_template: {fileID: 6002723005628740230, guid: ef01da653ebeb694d844ab39798efa7d,
+    type: 3}
+  dragon_prefab_template: {fileID: 9028776674215855170, guid: 9e2c775428fcf5e4bbc8992e0b5e0522,
+    type: 3}
+  Cannon_Temp: {fileID: 1784019077865158394, guid: 3b9bf39b394832d479cdee92032737fe,
+    type: 3}
+  townhall_template: {fileID: 4782293019790099236, guid: 5aef40c0a6bc7be4ebe11552a0e35c14,
+    type: 3}
+  witch_template: {fileID: 1498445360703867598, guid: 0a2d44710b7bcba4b8357e6f6f201419,
+    type: 3}
+  mortar_tower_template: {fileID: 3004057826421495976, guid: 5231f8a498fd51a4281d7be2a3d5ad03,
+    type: 3}

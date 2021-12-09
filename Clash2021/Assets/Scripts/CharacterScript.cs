@@ -28,7 +28,7 @@ public class CharacterScript:Unit
     // Update is called once per frame
     internal void Update()
     {
-        print("Here");
+     
    
         switch (current_state)
         {
