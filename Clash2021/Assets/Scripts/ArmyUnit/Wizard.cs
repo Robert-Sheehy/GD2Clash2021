@@ -6,10 +6,15 @@ using UnityEngine;
 public class Wizard : CharacterScript
 
 {
+    float animation_timer = 0, arcane_on_start = 0f, arcane_on_end = 0.80f;
     bool dead = false;
+    bool attacking = false;
     Transform Rhand;
 
+    GameObject arcaneGO;
+    public GameObject arcane_template;
 
+    new
     void Start()
     {
         base.Start();
@@ -21,10 +26,24 @@ public class Wizard : CharacterScript
         Melee_distance = 20f;
         character_speed = 10f;
 
+        Rhand = find_hand();
+        arcaneGO = Instantiate(arcane_template, Rhand);
+        arcaneGO.SetActive(false);
+
         attack_time_interval = 0.5f;
 
         current_state = Unit_States.Idle;
 
+    }
+    private Transform find_hand()
+
+    {
+        foreach (Transform bone in GetComponentInChildren<Transform>())
+            if (bone.name == "mixamorig:RightHand")
+            {
+                return bone;
+            }
+        return null;
     }
 
     // Update is called once per frame
@@ -32,9 +51,31 @@ public class Wizard : CharacterScript
     {
         if (Input.GetKeyDown(KeyCode.M))
         {
+
             takeDamage(200);
         }
+        if (attacking)
+        {
+            animation_timer += Time.deltaTime;
+            if (animation_timer > 3f) animation_timer = 0f;
+            arcaneGO.SetActive((animation_timer > arcane_on_start) && (animation_timer < arcane_on_end));
 
+        }
+
+        if (current_state != Unit_States.Attacking)
+        {
+            if (attacking)
+            {
+                attacking = false;
+                arcaneGO.SetActive(false);
+                character_animator.SetBool("isAttacking", false);
+            }
+        }
+
+        if (current_state == Unit_States.Dead)
+        {
+
+        }
         base.Update();
 
     }
@@ -59,17 +100,23 @@ public class Wizard : CharacterScript
             current_state = Unit_States.Dead;
             theManager.Im_Dead(this);
             dead = true;
-            character_animator.SetBool("is_dead", (current_state == Unit_States.Dead));
+            character_animator.SetBool("isDead", (current_state == Unit_States.Dead));
         }
     }
-    private Transform find_hand()
- 
+    internal override void attack(int damage)
     {
-        foreach (Transform bone in GetComponentInChildren<Transform>())
-            if(bone.name == "mixamorig:RightHand")
-            {
-                return bone;
-            }
-        return null;
+        if (attacking)
+        {
+
+        }
+        else
+        {
+            attacking = true;
+            animation_timer = 0;
+            character_animator.SetBool("isAttacking", (current_state == Unit_States.Attacking));
+        }
+
+
     }
+    
 }
