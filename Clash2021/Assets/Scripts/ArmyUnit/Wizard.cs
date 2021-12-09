@@ -7,6 +7,8 @@ public class Wizard : CharacterScript
 
 {
     bool dead = false;
+    Transform Rhand;
+
 
     void Start()
     {
@@ -59,5 +61,15 @@ public class Wizard : CharacterScript
             dead = true;
             character_animator.SetBool("is_dead", (current_state == Unit_States.Dead));
         }
+    }
+    private Transform find_hand()
+ 
+    {
+        foreach (Transform bone in GetComponentInChildren<Transform>())
+            if(bone.name == "mixamorig:RightHand")
+            {
+                return bone;
+            }
+        return null;
     }
 }
