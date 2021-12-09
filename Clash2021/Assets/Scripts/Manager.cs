@@ -166,8 +166,8 @@ public class Manager : MonoBehaviour
 
         GameObject infoGO = Instantiate(player_info_template, new_unit.transform.position + 15* Vector3.up, Quaternion.identity, new_unit.transform);
 
-        TextMeshPro text = GetComponent<TextMeshPro>();
-        text.SetText(new_unit.CHP.ToString());
+        
+        
         play_info_script info = infoGO.GetComponent<play_info_script>();
 
         if (info)
