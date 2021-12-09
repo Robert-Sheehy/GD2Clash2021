@@ -7,7 +7,7 @@ public class CharacterScript:Unit
 {
 
  
-    Renderer myRenderer;
+    //Renderer myRenderer;
 
 
     internal Animator character_animator;

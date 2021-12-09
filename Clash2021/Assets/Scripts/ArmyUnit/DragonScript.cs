@@ -39,7 +39,6 @@ public class DragonScript : CharacterScript
     }
 
     new
-
         // Update is called once per frame
         void Update()
     {
