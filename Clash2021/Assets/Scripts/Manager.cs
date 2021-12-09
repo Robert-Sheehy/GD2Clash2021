@@ -10,6 +10,7 @@ public class Manager : MonoBehaviour
     public GameObject Cannon_Temp;
     public GameObject townhall_template;
     public GameObject witch_template;
+    public GameObject wizard_template;
 
 
 
@@ -150,9 +151,24 @@ public class Manager : MonoBehaviour
             }
 
         }
+
         if(Input.GetKeyDown(KeyCode.X))
         {
           
+        }
+
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            GameObject new_Wizard = Instantiate(wizard_template,
+                new Vector3(Random.Range(-60f, 60f), 0, Random.Range(-60f, 60f)), Quaternion.identity);
+            CharacterScript new_wizardScript = new_Wizard.GetComponent<Wizard>();
+
+            if (new_wizardScript)
+            {
+                new_wizardScript.ImtheMan(this);
+                allCharacters.Add(new_wizardScript);
+            }
+            
         }
     }
 
