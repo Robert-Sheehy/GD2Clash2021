@@ -39,10 +39,9 @@ public class Wizard : CharacterScript
 
     {
         foreach (Transform bone in GetComponentInChildren<Transform>())
-            if (bone.name == "mixamorig:RightHand")
-            {
+            if (bone.name == "RightHand")
                 return bone;
-            }
+
         return null;
     }
 
@@ -58,7 +57,7 @@ public class Wizard : CharacterScript
         {
             animation_timer += Time.deltaTime;
             if (animation_timer > 3f) animation_timer = 0f;
-            arcaneGO.SetActive((animation_timer > arcane_on_start) && (animation_timer < arcane_on_end));
+            //arcaneGO.SetActive((animation_timer > arcane_on_start) && (animation_timer < arcane_on_end));
 
         }
 
@@ -95,7 +94,7 @@ public class Wizard : CharacterScript
     public override void takeDamage(int how_much_damage)
     {
         CHP -= how_much_damage;
-        if(CHP <= 0)
+        if (CHP <= 0)
         {
             current_state = Unit_States.Dead;
             theManager.Im_Dead(this);
@@ -114,9 +113,10 @@ public class Wizard : CharacterScript
             attacking = true;
             animation_timer = 0;
             character_animator.SetBool("isAttacking", (current_state == Unit_States.Attacking));
+            current_target.takeDamage(damage);
         }
 
 
     }
-    
+
 }
