@@ -339,4 +339,23 @@ public class Manager : MonoBehaviour
         return new_list;
     }
 
+    internal int numOfCharacters()
+    {
+        
+        int characterNum;
+
+        characterNum = allCharacters.Count;
+        
+        return characterNum;
+    }
+
+    internal int numOfBuildings()
+    {
+
+        int buildingNum;
+
+        buildingNum = allBuildings.Count;
+
+        return buildingNum;
+    }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GolemScript : CharacterScript
 {
@@ -25,12 +26,15 @@ public class GolemScript : CharacterScript
     internal int numberOfMiniGols = 3;
 
     internal float gRadius = 5f;
-   
+
+
 
     new
     void Start()
     {
-        if(isMiniGolem) {
+
+
+        if (isMiniGolem) {
             DPS = 80;
             MHP = 500;
         }
@@ -118,7 +122,9 @@ public class GolemScript : CharacterScript
 
         }
 
+
         base.Update();
+
 
         
     }
