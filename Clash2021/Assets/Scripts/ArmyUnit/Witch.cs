@@ -7,7 +7,6 @@ public class Witch : CharacterScript
 {
     float animation_timer = 0, magic_on_start = 0f, magic_on_end = 0.75f;
     float respawn_timer = 0;
-    bool isAttacking = false;
 
     
     Transform wand;
@@ -46,38 +45,23 @@ public class Witch : CharacterScript
     void Update()
     {
 
-        if (isAttacking)
-        {
-            animation_timer += Time.deltaTime;
-            if (animation_timer > 0.75f) animation_timer = 0f;
-            magicGO.SetActive((animation_timer > magic_on_start) && (animation_timer < magic_on_end));
-
-        }
-
-        if (current_state != Unit_States.Attacking)
-        {
-            if (isAttacking)
-            {
-                isAttacking = false;
-                magicGO.SetActive(false);
-                character_animator.SetBool("isAttacking", false);
-            }
-        }
-
-
         respawn_timer += Time.deltaTime;
         if (respawn_timer > 7f)
         {
             respawn_timer = 0f;
 
             theManager.spawn_skeletons(this);
-
         }
-           
+
+
+        if (current_state == Unit_States.Attacking)
+        {
+            animation_timer += Time.deltaTime;
+            if (animation_timer > 3f) animation_timer = 0f;
+            magicGO.SetActive((animation_timer > magic_on_start) && (animation_timer < magic_on_end));
+        }
 
         base.Update();
-       
-
     }
 
     internal override void attack(int dmg)
