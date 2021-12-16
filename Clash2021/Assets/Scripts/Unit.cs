@@ -4,6 +4,13 @@ using UnityEngine;
 
 public abstract class Unit : MonoBehaviour, IHealth
 {
+    internal enum Unit_States { Idle, Attacking, Under_Construction, Dying, Dead,
+        Move_to_Target
+    }
+    internal Unit_States current_state = Unit_States.Idle;
+    internal Renderer myRenderer;
+
+
     internal Manager theManager;
     internal float Melee_distance;
     internal int DPS;

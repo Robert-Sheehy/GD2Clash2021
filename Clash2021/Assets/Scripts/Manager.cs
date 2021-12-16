@@ -9,6 +9,8 @@ public class Manager : MonoBehaviour
     public GameObject dragon_prefab_template;
     public GameObject Cannon_Temp;
     public GameObject townhall_template;
+    public GameObject witch_template;
+    public GameObject archerTower_template;
 
 
 
@@ -19,6 +21,19 @@ public class Manager : MonoBehaviour
     {
         GameObject new_buildingGO = Instantiate(townhall_template,
                 position, Quaternion.identity);
+        Building new_buildingScript = new_buildingGO.GetComponent<Building>();
+
+        if (new_buildingScript)
+        {
+            new_buildingScript.ImtheMan(this);
+            allBuildings.Add(new_buildingScript);
+        }
+    }
+
+    internal void spawn_th_at(Vector3 point)
+    {
+        GameObject new_buildingGO = Instantiate(townhall_template,
+                point, Quaternion.identity);
         Building new_buildingScript = new_buildingGO.GetComponent<Building>();
 
         if (new_buildingScript)
@@ -41,6 +56,20 @@ public class Manager : MonoBehaviour
 
     }
 
+    internal void spawn_drag_at(Vector3 point)
+    {
+        GameObject new_characterGO = Instantiate(dragon_prefab_template,
+                      point, Quaternion.identity);
+
+        DragonScript newDragonScript = new_characterGO.GetComponent<DragonScript>();
+
+        if (newDragonScript)
+        {
+            newDragonScript.ImtheMan(this);
+            allCharacters.Add(newDragonScript);
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -56,6 +85,22 @@ public class Manager : MonoBehaviour
         {
            GameObject new_characterGO = Instantiate(character_prefab_template,
                            new Vector3(Random.Range(-10f, 10f), 0, Random.Range(-10f, 10f)), Quaternion.identity);
+
+            CharacterScript newCharacterScript = new_characterGO.GetComponent<CharacterScript>();
+
+            if (newCharacterScript)
+            {
+                newCharacterScript.ImtheMan(this);
+                allCharacters.Add(newCharacterScript);
+            }
+
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            GameObject new_characterGO = Instantiate(witch_template,
+                            new Vector3(Random.Range(-10f, 10f), 0, Random.Range(-10f, 10f)), Quaternion.identity);
 
             CharacterScript newCharacterScript = new_characterGO.GetComponent<CharacterScript>();
 
@@ -106,6 +151,21 @@ public class Manager : MonoBehaviour
             }
 
         }
+
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            GameObject new_ArcherTowerGO = Instantiate(archerTower_template,
+                new Vector3(Random.Range(-70f, 70f), 0, Random.Range(-70f, 70f)), Quaternion.identity);
+            Building new_ArcherTower = new_ArcherTowerGO.GetComponent<ArcherTower>();
+
+            if(new_ArcherTower)
+            {
+                new_ArcherTower.ImtheMan(this);
+                allBuildings.Add(new_ArcherTower);
+            }
+
+        }
+
         if(Input.GetKeyDown(KeyCode.X))
         {
           
@@ -158,7 +218,7 @@ public class Manager : MonoBehaviour
             Building nearest = null;
             CharacterScript characterScript = unit as CharacterScript;
             foreach (Building next_building in allBuildings)
-            {   if ((next_building.current_state != Building.Building_States.Dying) && (next_building.current_state != Building.Building_States.Dead))
+            {   if ((next_building.current_state != Building.Unit_States.Dying) && (next_building.current_state != Building.Unit_States.Dead))
                 if ((Vector3.Distance(characterScript.transform.position, next_building.transform.position) < distance))
                 {
                     distance = Vector3.Distance(characterScript.transform.position, next_building.transform.position);
@@ -173,7 +233,7 @@ public class Manager : MonoBehaviour
         {
 
             float distance = 100000f;
-            Building nearest = null;
+            CharacterScript nearest = null;
 
 
             Building buildingScript = unit as Building;
@@ -182,7 +242,7 @@ public class Manager : MonoBehaviour
                 if (Vector3.Distance(buildingScript.transform.position, next_character.transform.position) < distance)
                 {
                     distance = Vector3.Distance(buildingScript.transform.position, next_character.transform.position);
-                    nearest = buildingScript;
+                    nearest = next_character;
                 }
             }
 
