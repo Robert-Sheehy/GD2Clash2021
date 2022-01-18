@@ -28,17 +28,19 @@ public class CharacterScript:Unit
     // Update is called once per frame
     internal void Update()
     {
-        print("Here");
    
         switch (current_state)
         {
 
             case Unit_States.Idle:
 
+                character_animator.SetBool("isWalking", false);
+
                 if (current_target)
                 {
                     current_state = Unit_States.Move_to_Target;
                     character_animator.SetBool("isWalking", true);
+                    character_animator.SetBool("isAttacking", false);
                 }
                 else
                 {
@@ -63,6 +65,8 @@ public class CharacterScript:Unit
                     if (within_range(current_target))
                     {
                         current_state = Unit_States.Attacking;
+                        character_animator.SetBool("isAttacking", true);
+                        character_animator.SetBool("isWalking", false);
                         attack_timer = 0;
                         velocity = Vector3.zero;
                     }
@@ -80,7 +84,6 @@ public class CharacterScript:Unit
                 {
                     if (attack_timer <= 0f)
                     {
-
                         attack(DPS * (int)attack_time_interval);
                         attack_timer = attack_time_interval;
                     }
@@ -101,15 +104,6 @@ public class CharacterScript:Unit
 
 
         }
-
-
-
-
-
-
-
-
-
 
     }
 

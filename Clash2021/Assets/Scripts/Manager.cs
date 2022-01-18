@@ -9,8 +9,9 @@ public class Manager : MonoBehaviour
     public GameObject dragon_prefab_template;
     public GameObject Cannon_Temp;
     public GameObject townhall_template;
+    public GameObject skeleton_template;
     public GameObject witch_template;
-
+   
 
 
     List<CharacterScript> allCharacters;
@@ -67,6 +68,26 @@ public class Manager : MonoBehaviour
             newDragonScript.ImtheMan(this);
             allCharacters.Add(newDragonScript);
         }
+    }
+
+    internal void spawn_skeletons(Witch witch)
+    {
+      
+        for (int i = 0; i <4; i++)
+        {
+            GameObject clone = (GameObject)Instantiate(skeleton_template,position_around(witch.transform.position,i), witch.transform.rotation);
+            Skeleton spawned_skeleton_script = clone.GetComponent<Skeleton>();
+            spawned_skeleton_script.ImtheMan(this);
+            allCharacters.Add(spawned_skeleton_script);
+
+         
+        }
+    }
+
+    private Vector3 position_around(Vector3 position, int i)
+    {
+        float radius = 1;
+        return new Vector3(position.x + radius * Mathf.Cos(i * Mathf.PI / 2), 0, position.z + radius * Mathf.Sin(i * Mathf.PI / 2));
     }
 
     // Start is called before the first frame update

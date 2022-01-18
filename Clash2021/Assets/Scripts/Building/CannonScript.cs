@@ -28,6 +28,7 @@ public class CannonScript :Building, IHealth
     {
 
         base.Update();
+
         if (current_state == Unit_States.Attacking && current_target && attack_timer <= 0f && within_range(current_target))
         {
 

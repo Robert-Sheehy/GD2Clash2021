@@ -9,9 +9,6 @@ public class Building  : Unit
 
 {
     
-
-
-    
     public int Level
     {
         get { return _level + 1; }

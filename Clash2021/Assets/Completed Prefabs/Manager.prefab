@@ -47,4 +47,5 @@ MonoBehaviour:
   dragon_prefab_template: {fileID: 9028776674215855170, guid: 9e2c775428fcf5e4bbc8992e0b5e0522, type: 3}
   Cannon_Temp: {fileID: 1784019077865158394, guid: 3b9bf39b394832d479cdee92032737fe, type: 3}
   townhall_template: {fileID: 4782293019790099236, guid: 5aef40c0a6bc7be4ebe11552a0e35c14, type: 3}
-  witch_template: {fileID: 1498445360703867598, guid: 0a2d44710b7bcba4b8357e6f6f201419, type: 3}
+  skeleton_template: {fileID: 1809680881062764, guid: cbba07a6ac8fd9648a0ee26df90297e9, type: 3}
+  witch_template: {fileID: 179894, guid: 33cf96e7c28302643ace35c3d203f5e0, type: 3}
